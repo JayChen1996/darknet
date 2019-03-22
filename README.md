@@ -1,7 +1,7 @@
 # Yolo-v3 and Yolo-v2 for Windows and Linux
 # 在Windows和Linux上训练 YOLOv3 和 YOLOv2
 ### (neural network for object detection) - Tensor Cores can be used on [Linux](https://github.com/AlexeyAB/darknet#how-to-compile-on-linux) and [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg)
-### (用于目标检测的神经网络) - Tesor Core可以在 [Linux](https://github.com/AlexeyAB/darknet#how-to-compile-on-linux) and [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg) 和 [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg) 上使用
+### (用于目标检测的神经网络) - Tesor Core可以在 [Linux](https://github.com/AlexeyAB/darknet#how-to-compile-on-linux)和[Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg)上使用
 
 Contributors: https://github.com/AlexeyAB/darknet/graphs/contributors 
 项目贡献者: https://github.com/AlexeyAB/darknet/graphs/contributors 
