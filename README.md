@@ -1,8 +1,12 @@
 # Yolo-v3 and Yolo-v2 for Windows and Linux
+# 在Windows和Linux上训练 YOLOv3 和 YOLOv2
 ### (neural network for object detection) - Tensor Cores can be used on [Linux](https://github.com/AlexeyAB/darknet#how-to-compile-on-linux) and [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg)
+### (用于目标检测的神经网络) - Tesor Core可以在 [Linux](https://github.com/AlexeyAB/darknet#how-to-compile-on-linux) and [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg) 和 [Windows](https://github.com/AlexeyAB/darknet#how-to-compile-on-windows-using-vcpkg) 上使用
 
 Contributors: https://github.com/AlexeyAB/darknet/graphs/contributors 
+项目贡献者: https://github.com/AlexeyAB/darknet/graphs/contributors 
 More details: http://pjreddie.com/darknet/yolo/
+更多详情: http://pjreddie.com/darknet/yolo/
 
 
 [![CircleCI](https://circleci.com/gh/AlexeyAB/darknet.svg?style=svg)](https://circleci.com/gh/AlexeyAB/darknet)
@@ -11,39 +15,68 @@ More details: http://pjreddie.com/darknet/yolo/
 
 
 * [Requirements (and how to install dependecies)](#requirements)
+* [要求 (以及如何安装依赖库)](#requirements_chinese)
 * [Pre-trained models](#pre-trained-models)
+* [预训练模型](#pre-trained-models_chinese)
 * [Explanations in issues](https://github.com/AlexeyAB/darknet/issues?q=is%3Aopen+is%3Aissue+label%3AExplanations)
+* [问题解释](https://github.com/AlexeyAB/darknet/issues?q=is%3Aopen+is%3Aissue+label%3AExplanations)
 
 0.  [Improvements in this repository](#improvements-in-this-repository)
+0.  [这个repository的改进](#improvements-in-this-repository_chinese)
 1.  [How to use](#how-to-use-on-the-command-line)
+1.  [如何使用](#how-to-use-on-the-command-line_chinese)
 2.  [How to compile on Linux](#how-to-compile-on-linux)
+2.  [如何在Linux上编译](#how-to-compile-on-linux_chinese)
 3.  How to compile on Windows
+3.  如何在Windows上编译
     * [Using vcpkg](#how-to-compile-on-windows-using-vcpkg)
+    * [使用vcpkg](#how-to-compile-on-windows-using-vcpkg_chinese)
     * [Legacy way](#how-to-compile-on-windows-legacy-way)
+    * [以前版本的编译方法](#how-to-compile-on-windows-legacy-way_chinese)
 4.  [How to train (Pascal VOC Data)](#how-to-train-pascal-voc-data)
+4.  [如何训练(在Pascal VOC 数据集上)](#how-to-train-pascal-voc-data_chinese)
 5.  [How to train with multi-GPU:](#how-to-train-with-multi-gpu)
+5.  [如何使用多GPU训练:](#how-to-train-with-multi-gpu_chinese)
 6.  [How to train (to detect your custom objects)](#how-to-train-to-detect-your-custom-objects)
+6.  [如何训练以检测你自己的目标](#how-to-train-to-detect-your-custom-objects_chinese)
 7.  [How to train tiny-yolo (to detect your custom objects)](#how-to-train-tiny-yolo-to-detect-your-custom-objects)
+7.  [如何训练tiny-yolo以检测你自己的目标](#how-to-train-tiny-yolo-to-detect-your-custom-objects_chinese)
 8.  [When should I stop training](#when-should-i-stop-training)
+8.  [什么时候应该停止训练](#when-should-i-stop-training_chinese)
 9.  [How to calculate mAP on PascalVOC 2007](#how-to-calculate-map-on-pascalvoc-2007)
+9.  [如何在PascalVOC 2007上计算mAP(各类别平均精度的均值,见https://www.zhihu.com/question/53405779)](#how-to-calculate-map-on-pascalvoc-2007)
 10.  [How to improve object detection](#how-to-improve-object-detection)
+10.  [如何改进目标检测](#how-to-improve-object-detection)
 11.  [How to mark bounded boxes of objects and create annotation files](#how-to-mark-bounded-boxes-of-objects-and-create-annotation-files)
+11.  [如何标记包选框以及创建相应的标注解释文件(annotation files)](#how-to-mark-bounded-boxes-of-objects-and-create-annotation-files)
 12. [How to use Yolo as DLL and SO libraries](#how-to-use-yolo-as-dll-and-so-libraries)
+12. [如何将YOLO作为dll或者so这样的动态链接库使用](#how-to-use-yolo-as-dll-and-so-libraries)
+
+(下面是[YOLOv3论文]https://pjreddie.com/media/files/papers/YOLOv3.pdf中的图)
 
 |  ![Darknet Logo](http://pjreddie.com/media/files/darknet-black-small.png) | &nbsp; ![map_time](https://user-images.githubusercontent.com/4096485/52151356-e5d4a380-2683-11e9-9d7d-ac7bc192c477.jpg) mAP@0.5 (AP50) https://pjreddie.com/media/files/papers/YOLOv3.pdf |
 |---|---|
 
 * YOLOv3-spp better than YOLOv3 - mAP = 60.6%, FPS = 20: https://pjreddie.com/darknet/yolo/
+* YOLOv3-spp版本好于YOLOv3([spp即Spartial Pyramid Pooling](https://medium.com/@arashilen/note-for-yolov3-3e867c0ceca9))--mAP = 60.6%, FPS=20: https://pjreddie.com/darknet/yolo/
 * Yolo v3 source chart for the RetinaNet on MS COCO got from Table 1 (e): https://arxiv.org/pdf/1708.02002.pdf
+* YOLO v3 论文中的图表(就是上面那个很拉风的图)来源于RetinaNet在MS COCO数据集上的测试论文——Table 1 (e): https://arxiv.org/pdf/1708.02002.pdf
 * Yolo v2 on Pascal VOC 2007: https://hsto.org/files/a24/21e/068/a2421e0689fb43f08584de9d44c2215f.jpg
+* YOLO v2 在VOC2007上的测试结果(我不是针对各位的那种): https://hsto.org/files/a24/21e/068/a2421e0689fb43f08584de9d44c2215f.jpg
 * Yolo v2 on Pascal VOC 2012 (comp4): https://hsto.org/files/3a6/fdf/b53/3a6fdfb533f34cee9b52bdd9bb0b19d9.jpg
+* YOLO v2 在Pascal VOC 2012(comp4)上结果(ps.comp4是在其他数据集上训练，comp3是在VOC数据集上训练http://host.robots.ox.ac.uk:8080/leaderboard/main_bootstrap.php): https://hsto.org/files/3a6/fdf/b53/3a6fdfb533f34cee9b52bdd9bb0b19d9.jpg
 
 ### Requirements
+### 要求
 
 * Windows or Linux
+* Windows或者Linux
 * **CMake >= 3.8** for modern CUDA support: https://cmake.org/download/
+* **Cmake版本>=3.8** 以[支持现有版本的CUDA C++语言](https://devblogs.nvidia.com/building-cuda-applications-cmake/): https://cmake.org/download/
 * **CUDA 10.0**: https://developer.nvidia.com/cuda-toolkit-archive (on Linux do [Post-installation Actions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions))
+* **CUDA 10.0**: https://developer.nvidia.com/cuda-toolkit-archive (Linux上必须做一些安装后操作[Post-installation Actions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions))
 * **OpenCV < 4.0**: use your preferred package manager (brew, apt), build from source using [vcpkg](https://github.com/Microsoft/vcpkg) or download from [OpenCV official site](https://opencv.org/releases.html) (on Windows set system variable `OPENCV_DIR` = `C:\opencv\build` - where are the `include` and `x64` folders [image](https://user-images.githubusercontent.com/4096485/53249516-5130f480-36c9-11e9-8238-a6e82e48c6f2.png))
+* **OpenCV < 4.0**: 使用你顺手的包管理器(brew, apt), 从源码编译 [vcpkg](https://github.com/Microsoft/vcpkg) or 或者从此处下载 [OpenCV 官网](https://opencv.org/releases.html) (on Windows set system variable `OPENCV_DIR` = `C:\opencv\build` - where are the `include` and `x64` folders [image](https://user-images.githubusercontent.com/4096485/53249516-5130f480-36c9-11e9-8238-a6e82e48c6f2.png))
 * **cuDNN >= 7.0 for CUDA 10.0** https://developer.nvidia.com/rdp/cudnn-archive (on **Linux** copy `cudnn.h`,`libcudnn.so`... as desribed here https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installlinux-tar , on **Windows** copy `cudnn.h`,`cudnn64_7.dll`, `cudnn64_7.lib` as desribed here https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installwindows )
 * **GPU with CC >= 3.0**: https://en.wikipedia.org/wiki/CUDA#GPUs_supported
 * on Linux **GCC or Clang**, on Windows **MSVS 2017 (v15)** https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#
