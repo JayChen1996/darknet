@@ -76,44 +76,71 @@ More details: http://pjreddie.com/darknet/yolo/
 * **CUDA 10.0**: https://developer.nvidia.com/cuda-toolkit-archive (on Linux do [Post-installation Actions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions))
 * **CUDA 10.0**: https://developer.nvidia.com/cuda-toolkit-archive (Linux上必须做一些安装后操作[Post-installation Actions](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions))
 * **OpenCV < 4.0**: use your preferred package manager (brew, apt), build from source using [vcpkg](https://github.com/Microsoft/vcpkg) or download from [OpenCV official site](https://opencv.org/releases.html) (on Windows set system variable `OPENCV_DIR` = `C:\opencv\build` - where are the `include` and `x64` folders [image](https://user-images.githubusercontent.com/4096485/53249516-5130f480-36c9-11e9-8238-a6e82e48c6f2.png))
-* **OpenCV < 4.0**: 使用你顺手的包管理器(brew, apt), 从源码编译 [vcpkg](https://github.com/Microsoft/vcpkg) or 或者从此处下载 [OpenCV 官网](https://opencv.org/releases.html) (on Windows set system variable `OPENCV_DIR` = `C:\opencv\build` - where are the `include` and `x64` folders [image](https://user-images.githubusercontent.com/4096485/53249516-5130f480-36c9-11e9-8238-a6e82e48c6f2.png))
+* **OpenCV < 4.0**: 使用你顺手的包管理器(brew, apt), 从源码编译 [vcpkg](https://github.com/Microsoft/vcpkg) or 或者从此处下载 [OpenCV 官网](https://opencv.org/releases.html) (在Windows系统中设置环境变量 `OPENCV_DIR` = `C:\opencv\build` - 为目录 `include` 和 `x64` 所在的地方，如图所示[image](https://user-images.githubusercontent.com/4096485/53249516-5130f480-36c9-11e9-8238-a6e82e48c6f2.png))
 * **cuDNN >= 7.0 for CUDA 10.0** https://developer.nvidia.com/rdp/cudnn-archive (on **Linux** copy `cudnn.h`,`libcudnn.so`... as desribed here https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installlinux-tar , on **Windows** copy `cudnn.h`,`cudnn64_7.dll`, `cudnn64_7.lib` as desribed here https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installwindows )
+* **cuDNN >= 7.0 for CUDA 10.0** https://developer.nvidia.com/rdp/cudnn-archive (在 **Linux** 中复制 `cudnn.h`,`libcudnn.so`...到指定位置， 详见 https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installlinux-tar , 在 **Windows** 上复制 `cudnn.h`,`cudnn64_7.dll`, `cudnn64_7.lib` 这几个文件到指定位置，详见 https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installwindows )
 * **GPU with CC >= 3.0**: https://en.wikipedia.org/wiki/CUDA#GPUs_supported
+* **GPU with CC >= 3.0**: GPU的算力要大于等于3.0，(CC, Compute Capability)，查看你的CPU的算力:https://en.wikipedia.org/wiki/CUDA#GPUs_supported
 * on Linux **GCC or Clang**, on Windows **MSVS 2017 (v15)** https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#
+* Linux上使用 **GCC 或者 Clang**, Windows上则使用 **MSVS 2017 (v15)** https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=15#
+
 
 #### Pre-trained models
+#### 预训练好的模型权重
 
 There are weights-file for different cfg-files (smaller size -> faster speed & lower accuracy:
+这些权重文件对应着不同的cfg文件(网络结构配置文件)( 文件越小，速度越快，精确度越低)
 
 * `yolov3-openimages.cfg` (247 MB COCO **Yolo v3**) - requires 4 GB GPU-RAM: https://pjreddie.com/media/files/yolov3-openimages.weights
+* `yolov3-openimages.cfg` (247 MB COCO **Yolo v3**) - 需要4GB显卡内存: https://pjreddie.com/media/files/yolov3-openimages.weights
 * `yolov3-spp.cfg` (240 MB COCO **Yolo v3**) - requires 4 GB GPU-RAM: https://pjreddie.com/media/files/yolov3-spp.weights
+* `yolov3-spp.cfg` (240 MB COCO **Yolo v3**) - 需要4GB显卡内存: https://pjreddie.com/media/files/yolov3-spp.weights
 * `yolov3.cfg` (236 MB COCO **Yolo v3**) - requires 4 GB GPU-RAM: https://pjreddie.com/media/files/yolov3.weights
+* `yolov3.cfg` (236 MB COCO **Yolo v3**) - 需要4GB显卡内存: https://pjreddie.com/media/files/yolov3.weights
 * `yolov3-tiny.cfg` (34 MB COCO **Yolo v3 tiny**) - requires 1 GB GPU-RAM:  https://pjreddie.com/media/files/yolov3-tiny.weights
+* `yolov3-tiny.cfg` (34 MB COCO **Yolo v3 tiny**) - 需要1GB显卡内存:  https://pjreddie.com/media/files/yolov3-tiny.weights
 * `yolov2.cfg` (194 MB COCO Yolo v2) - requires 4 GB GPU-RAM: https://pjreddie.com/media/files/yolov2.weights
+* `yolov2.cfg` (194 MB COCO Yolo v2) - 需要4GB显卡内存: https://pjreddie.com/media/files/yolov2.weights
 * `yolo-voc.cfg` (194 MB VOC Yolo v2) - requires 4 GB GPU-RAM: http://pjreddie.com/media/files/yolo-voc.weights
+* `yolo-voc.cfg` (194 MB VOC Yolo v2) - 需要4GB显卡内存: http://pjreddie.com/media/files/yolo-voc.weights
 * `yolov2-tiny.cfg` (43 MB COCO Yolo v2) - requires 1 GB GPU-RAM: https://pjreddie.com/media/files/yolov2-tiny.weights
+* `yolov2-tiny.cfg` (43 MB COCO Yolo v2) - 需要1GB显卡内存: https://pjreddie.com/media/files/yolov2-tiny.weights
 * `yolov2-tiny-voc.cfg` (60 MB VOC Yolo v2) - requires 1 GB GPU-RAM: http://pjreddie.com/media/files/yolov2-tiny-voc.weights
+* `yolov2-tiny-voc.cfg` (60 MB VOC Yolo v2) - 需要1GB显卡内存: http://pjreddie.com/media/files/yolov2-tiny-voc.weights
 * `yolo9000.cfg` (186 MB Yolo9000-model) - requires 4 GB GPU-RAM: http://pjreddie.com/media/files/yolo9000.weights
+* `yolo9000.cfg` (186 MB Yolo9000-model) - 需要4GB显卡内存: http://pjreddie.com/media/files/yolo9000.weights
 
 Put it near compiled: darknet.exe
+把下载好的权重文件放在darknet.exe同一个目录下(先别去找，你找不到的，darknet.exe是你编译后再生成的)
 
 You can get cfg-files by path: `darknet/cfg/`
+你可以通过这个路径: `darknet/cfg/` 来获取.cfg文件(网络结构的配置文件)
 
 ##### Examples of results
+##### 结果示例
 
 [![Yolo v3](http://img.youtube.com/vi/VOC3huqHrss/0.jpg)](https://www.youtube.com/watch?v=MPU2HistivI "Yolo v3")
 
 Others: https://www.youtube.com/user/pjreddie/videos
+其他还有: https://www.youtube.com/user/pjreddie/videos
 
 ### Improvements in this repository
+### 这个仓库所作的改进
 
 * added support for Windows
+* 添加了Windows支持
 * improved binary neural network performance **2x-4x times** for Detection on CPU and GPU if you trained your own weights by using this XNOR-net model (bit-1 inference) : https://github.com/AlexeyAB/darknet/blob/master/cfg/yolov3-tiny_xnor.cfg
+* 如果你通过使用这个XNOR-net模型(bit-1 inference，这个要看相关文献，我不懂了)https://github.com/AlexeyAB/darknet/blob/master/cfg/yolov3-tiny_xnor.cfg来训练你自己的权重文件，那么改进的二进制神经网络([BNN](https://software.intel.com/en-us/articles/binary-neural-networks))在CPU和GPU上进行的检测任务性能可以提升2到4倍
 * improved neural network performance **~7%** by fusing 2 layers into 1: Convolutional + Batch-norm
+* 通过融合两层:Convolutional+Batch-norm为一层，提升了神经网络的约7%的性能
 * improved neural network performance Detection **3x times**, Training **2 x times** on GPU Volta (Tesla V100, Titan V, ...) using Tensor Cores if `CUDNN_HALF` defined in the `Makefile` or `darknet.sln`
+* 如果在`Makefile`或者`darknet.sln`中定义了`CUDNN_HALF`宏，通过使用张量核心(Tensor Cores)可以在Volta架构的GPU上提升网络检测性能**三倍**，训练性能**两倍**
 * improved performance **~1.2x** times on FullHD, **~2x** times on 4K, for detection on the video (file/stream) using `darknet detector demo`... 
+* 对于视频(文件或流视频)使用`darknet detector demo`检测，在全高清规格上提升了约**1.2倍**性能，4K上提升了**约两倍**性能，
 * improved performance **3.5 X times** of data augmentation for training (using OpenCV SSE/AVX functions instead of hand-written functions) - removes bottleneck for training on multi-GPU or GPU Volta
+* (使用OpenCV [SSE/AVX](https://zhoujianshi.github.io/articles/2017/%E4%BD%BF%E7%94%A8Intel%20SSE-AVX%E6%8C%87%E4%BB%A4%E9%9B%86%EF%BC%88SIMD%EF%BC%89%E5%8A%A0%E9%80%9F%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF%E8%AE%A1%E7%AE%97/index.html) 函数而不是手写函数)提升了训练时的数据增强性能**3.5倍** - 打破了在多GPU或者是Volta架构GPU上训练的瓶颈
 * improved performance of detection and training on Intel CPU with AVX (Yolo v3 **~85%**, Yolo v2 ~10%)
+* 提升了使用了AVX(Advanced Vector Extensions)的英特尔CPU进行检测和训练的性能(Yolo v3 **约85%**, YOLO v2 约10%)
 * fixed usage of `[reorg]`-layer
 * optimized memory allocation during network resizing when `random=1`
 * optimized initialization GPU for detection - we use batch=1 initially instead of re-init with batch=1
