@@ -142,9 +142,13 @@ Others: https://www.youtube.com/user/pjreddie/videos
 * improved performance of detection and training on Intel CPU with AVX (Yolo v3 **~85%**, Yolo v2 ~10%)
 * 提升了使用了AVX(Advanced Vector Extensions)的英特尔CPU进行检测和训练的性能(Yolo v3 **约85%**, YOLO v2 约10%)
 * fixed usage of `[reorg]`-layer
+* 修复了`[reorg]`层的用法(具体我还没搞懂，详见https://blog.csdn.net/qq_17550379/article/details/78948839)
 * optimized memory allocation during network resizing when `random=1`
+* 当`random=1`时在网络resizing(不懂，可能是resize图像吧)期间优化内存分配
 * optimized initialization GPU for detection - we use batch=1 initially instead of re-init with batch=1
+* 为检测任务优化了GPU初始化 - 我们一开始就使用了batch=1而不是使用batch=1重新初始化
 * added correct calculation of **mAP, F1, IoU, Precision-Recall** using command `darknet detector map`...
+* 添加了使用**mAP, F1, IoU, Precision-Recall**方式的准确度度量，使用命令 `darknet detector map`可以使用他们
 * added drawing of chart of average-Loss and accuracy-mAP (`-map` flag) during training
 * run `./darknet detector demo ... -json_port 8070 -mjpeg_port 8090` as JSON and MJPEG server to get results online over the network by using your soft or Web-browser
 * added calculation of anchors for training
