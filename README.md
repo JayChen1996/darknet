@@ -150,24 +150,39 @@ Others: https://www.youtube.com/user/pjreddie/videos
 * added correct calculation of **mAP, F1, IoU, Precision-Recall** using command `darknet detector map`...
 * 添加了使用**mAP, F1, IoU, Precision-Recall**方式的准确度度量，使用命令 `darknet detector map`可以使用他们
 * added drawing of chart of average-Loss and accuracy-mAP (`-map` flag) during training
+* 添加了训练期间的average-Loss(平均损失)和准确度度量mAP(`-map` 命令参数可以调用)的图表绘制
 * run `./darknet detector demo ... -json_port 8070 -mjpeg_port 8090` as JSON and MJPEG server to get results online over the network by using your soft or Web-browser
+* 运行 `./darknet detector demo ... -json_port 8070 -mjpeg_port 8090` 作为JSON和MJPEG服务器以通过你的软件或者浏览器在线获取结果。
 * added calculation of anchors for training
+* 添加训练时anchors(锚)的计算
 * added example of Detection and Tracking objects: https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
+* 添加了检测和跟踪目标的例子: https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
 * fixed code for use Web-cam on OpenCV 3.x
+* 修复了OpenCV 3.x使用网络摄像头的代码
 * run-time tips and warnings if you use incorrect cfg-file or dataset
+* 如果你使用了不正确的配置文件或者数据集，可以在运行时给出提示和警告
 * many other fixes of code...
+* 以及其他很多代码的修正
 
 And added manual - [How to train Yolo v3/v2 (to detect your custom objects)](#how-to-train-to-detect-your-custom-objects)
+添加了手册 - [如何训练Yolo v3/v2以检测你自己的目标](#how-to-train-to-detect-your-custom-objects)
+
 
 Also, you might be interested in using a simplified repository where is implemented INT8-quantization (+30% speedup and -1% mAP reduced): https://github.com/AlexeyAB/yolo2_light
+也许，你对通过INT8-quantization技术(30%的速度提升及1%的精度损失)实现的简化版的库更感兴趣: https://github.com/AlexeyAB/yolo2_light
 
 #### How to use on the command line
+#### 如何通过命令行使用
 
 On Linux use `./darknet` instead of `darknet.exe`, like this:`./darknet detector test ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights`
+在Linux上使用 `./darknet` 而非`darknet.exe`，像这样:`./darknet detector test ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights`
 
 On Linux find executable file `./darknet` in the root directory, while on Windows find it in the directory `\build\darknet\x64` 
+在Linux上找到可执行文件 `./darknet` 在**项目的根目录**下，在Windows上你可以在`\build\darknet\x64`这个目录中找到它
+
 
 * Yolo v3 COCO - **image**: `darknet.exe detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights -thresh 0.25`
+* YOLO v3 COCO数据集 - **图片**: `darknet.exe detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights -thresh 0.25`
 * **Output coordinates** of objects: `darknet.exe detector test cfg/coco.data yolov3.cfg yolov3.weights -ext_output dog.jpg`
 * Yolo v3 COCO - **video**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -ext_output test.mp4`
 * Yolo v3 COCO - **WebCam 0**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -c 0`
