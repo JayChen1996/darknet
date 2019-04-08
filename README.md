@@ -180,18 +180,27 @@ On Linux use `./darknet` instead of `darknet.exe`, like this:`./darknet detector
 On Linux find executable file `./darknet` in the root directory, while on Windows find it in the directory `\build\darknet\x64` 
 在Linux上找到可执行文件 `./darknet` 在**项目的根目录**下，在Windows上你可以在`\build\darknet\x64`这个目录中找到它
 
-
+**他这里的数据集就是说通过这个数据集训练出来的检测权重和分类，数据集在这个算法产生的结果就在于分类和权重不一样，不同数据集的不同配置文件在coco.data里**
 * Yolo v3 COCO - **image**: `darknet.exe detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights -thresh 0.25`
 * YOLO v3 COCO数据集 - **图片**: `darknet.exe detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights -thresh 0.25`
 * **Output coordinates** of objects: `darknet.exe detector test cfg/coco.data yolov3.cfg yolov3.weights -ext_output dog.jpg`
+* **输出检测目标的坐标**: `darknet.exe detector test cfg/coco.data yolov3.cfg yolov3.weights -ext_output dog.jpg`
 * Yolo v3 COCO - **video**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -ext_output test.mp4`
+* YOLO v3 COCO数据集 - **视频**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -ext_output test.mp4`
 * Yolo v3 COCO - **WebCam 0**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -c 0`
+* YOLO v3 COCO数据集 - **摄像头**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights -c 0`
 * Yolo v3 COCO for **net-videocam** - Smart WebCam: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights http://192.168.0.80:8080/video?dummy=param.mjpg`
+* YOLO v3 COCO数据集 - **网络视频** - 智能网络摄像头: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights http://192.168.0.80:8080/video?dummy=param.mjpg`
 * Yolo v3 - **save result videofile res.avi**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights test.mp4 -out_filename res.avi`
+* Yolo v3 - **保存结果视频文件**: `darknet.exe detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights test.mp4 -out_filename res.avi`
 * Yolo v3 **Tiny** COCO - video: `darknet.exe detector demo cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights test.mp4`
+* Yolo v3 **Tiny COCO数据集** COCO - 视频检测: `darknet.exe detector demo cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights test.mp4`
 * **JSON and MJPEG server** that allows multiple connections from your soft or Web-browser `ip-address:8070` and 8090: `./darknet detector demo ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights test50.mp4 -json_port 8070 -mjpeg_port 8090 -ext_output`
+* 这里的JSON和MJPEG服务器还没有搞懂
 * Yolo v3 Tiny **on GPU #1**: `darknet.exe detector demo cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights -i 1 test.mp4`
+* YOLOv3的tiny版本 **在GPU #1上**: `darknet.exe detector demo cfg/coco.data cfg/yolov3-tiny.cfg yolov3-tiny.weights -i 1 test.mp4`
 * Alternative method Yolo v3 COCO - image: `darknet.exe detect cfg/yolov3.cfg yolov3.weights -i 0 -thresh 0.25`
+
 * Train on **Amazon EC2**, to see mAP & Loss-chart using URL like: `http://ec2-35-160-228-91.us-west-2.compute.amazonaws.com:8090` in the Chrome/Firefox: 
     `./darknet detector train cfg/coco.data yolov3.cfg darknet53.conv.74 -dont_show -mjpeg_port 8090 -map`
 * 186 MB Yolo9000 - image: `darknet.exe detector test cfg/combine9k.data yolo9000.cfg yolo9000.weights`
@@ -234,14 +243,19 @@ Before make, you can set such options in the `Makefile`: [link](https://github.c
 To run Darknet on Linux use examples from this article, just use `./darknet` instead of `darknet.exe`, i.e. use this command: `./darknet detector test ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights`
 
 ### How to compile on Windows (using `vcpkg`)
+### Windows上如何进行编译(使用 `vcpkg`)
 
 1. Install or update Visual Studio to at least version 2017, making sure to have it fully patched (run again the installer if not sure to automatically update to latest version). If you need to install from scratch, download VS from here: [Visual Studio 2017 Community](http://visualstudio.com)
+1. 安装或升级Visual Studio到至少VS2017，确保安装了所有的补丁(如果不确认是否升级到最新版本，重新运行一次安装程序)，如果你需要从头安装(install from scratch)，下载VS[Visual Studio 2017 Community](http://visualstudio.com)
 
 2. Install CUDA and cuDNN
+2. 安装CUDA和cuDNN
 
 3. Install `git` and `cmake`. Make sure they are on the Path at least for the current account
+3. 安装 `git` 和 `cmake`。确保其在环境变量Path中
 
 4. Install [vcpkg](https://github.com/Microsoft/vcpkg) and try to install a test library to make sure everything is working, for example `vcpkg install opengl`
+4. 安装 [vcpkg](https://github.com/Microsoft/vcpkg) 并且试着安装一个测试库以确保工作正常，例如`vcpkg install opengl`
 
 5. Define an environment variables, `VCPKG_ROOT`, pointing to the install path of `vcpkg`
 
