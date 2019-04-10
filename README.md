@@ -258,10 +258,13 @@ To run Darknet on Linux use examples from this article, just use `./darknet` ins
 4. 安装 [vcpkg](https://github.com/Microsoft/vcpkg) 并且试着安装一个测试库以确保工作正常，例如`vcpkg install opengl`
 
 5. Define an environment variables, `VCPKG_ROOT`, pointing to the install path of `vcpkg`
+5. 定义一个环境变量，`VCPKG_ROOT`, pointing to the install path of `vcpkg`
 
 6. Define another environment variable, with name `VCPKG_DEFAULT_TRIPLET` and value `x64-windows`
+6. 再定义一个环境变量，变量名`VCPKG_DEFAULT_TRIPLET`和值`x64-windows`
 
 7. Open a Powershell (as a standard user) and type (the last command requires a confirmation and is used to clean up unnecessary files)
+7. 打开powershell，输入如下内容
 
 ```PowerShell
 PS \>                  cd $env:VCPKG_ROOT
@@ -269,32 +272,45 @@ PS Code\vcpkg>         .\vcpkg install pthreads opencv #replace with opencv[cuda
 ```
 
 8. [necessary only with CUDA] Customize the `build.ps1` script enabling the appropriate `my_cuda_compute_model` line. If not manually defined, CMake toolchain will automatically use the very low 3.0 CUDA compute model
+8. [只有CUDA有必要]修改`build.ps1`脚本以适用自己的电脑，将合适的`my_cuda_compute_model`行解除注释，如果没有手动定义，CMake工具将自动使用非常低的3.0版本的CUDA计算模型
 
 9.  Build with the Powershell script `build.ps1`. If you want to use Visual Studio, you will find a custom solution created for you by CMake after the build containing all the appropriate config flags for your system.
+9. 用Powershell脚本`build.ps1`进行构建，如果你想要使用Visual Studio，在构建之后，你将会发现一个由CMake创建的包含所有合适于你系统配置的客制的解决方案
+
 
 ### How to compile on Windows (legacy way)
+### 如何在Windows上编译(以前的方法)
 
 1. If you have **MSVS 2015, CUDA 10.0, cuDNN 7.4 and OpenCV 3.x** (with paths: `C:\opencv_3.0\opencv\build\include` & `C:\opencv_3.0\opencv\build\x64\vc14\lib`), then start MSVS, open `build\darknet\darknet.sln`, set **x64** and **Release** https://hsto.org/webt/uh/fk/-e/uhfk-eb0q-hwd9hsxhrikbokd6u.jpeg and do the: Build -> Build darknet. Also add Windows system variable `CUDNN` with path to CUDNN: https://user-images.githubusercontent.com/4096485/53249764-019ef880-36ca-11e9-8ffe-d9cf47e7e462.jpg **NOTE:** If installing OpenCV, use OpenCV 3.4.0 or earlier. This is a bug in OpenCV 3.4.1 in the C API (see [#500](https://github.com/AlexeyAB/darknet/issues/500)).
+1. 如果你已经安装了**MSVS 2015, CUDA 10.0, cuDNN 7.4 and OpenCV 3.x**（路径:`C:\opencv_3.0\opencv\build\include` & `C:\opencv_3.0\opencv\build\x64\vc14\lib`）,启动MSVS，打开`build\darknet\darknet.sln`，设置**x64** 和 **Release**https://hsto.org/webt/uh/fk/-e/uhfk-eb0q-hwd9hsxhrikbokd6u.jpeg ，接着：Build -> Build darknet。并且在Windows系统上添加了系统变量`CUDNN` 且有合适的路径: https://user-images.githubusercontent.com/4096485/53249764-019ef880-36ca-11e9-8ffe-d9cf47e7e462.jpg  **注意:** 如果安装OpenCV, 使用 OpenCV 3.4.0 或者更早的版本. OpenCV3.4.1在C API上存在一个bug (详见 [#500](https://github.com/AlexeyAB/darknet/issues/500)).
 
     1.1. Find files `opencv_world320.dll` and `opencv_ffmpeg320_64.dll` (or `opencv_world340.dll` and `opencv_ffmpeg340_64.dll`) in `C:\opencv_3.0\opencv\build\x64\vc14\bin` and put it near with `darknet.exe`
+    1.1. 找到文件 `opencv_world320.dll` 和 `opencv_ffmpeg320_64.dll` (或者 `opencv_world340.dll` 和 `opencv_ffmpeg340_64.dll`) 在目录 `C:\opencv_3.0\opencv\build\x64\vc14\bin`中 并且将其拷贝到 `darknet.exe` 同级目录下
     
     1.2 Check that there are `bin` and `include` folders in the `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0` if aren't, then copy them to this folder from the path where is CUDA installed
+    1.2 检查`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0`中是否有 `bin` and `include` 目录，如果没有，从CUDA的安装路径中拷贝过去
     
     1.3. To install CUDNN (speedup neural network), do the following:
+    1.3. 要安装CUDNN(用于加速神经网络)，按如下操作
       
     * download and install **cuDNN v7.4.1 for CUDA 10.0**: https://developer.nvidia.com/rdp/cudnn-archive
+    * 下载并安装 **cuDNN v7.4.1 for CUDA 10.0**: https://developer.nvidia.com/rdp/cudnn-archive
       
     * add Windows system variable `CUDNN` with path to CUDNN: https://user-images.githubusercontent.com/4096485/53249764-019ef880-36ca-11e9-8ffe-d9cf47e7e462.jpg
+    * 添加Windows系统变量 `CUDNN`， 值为CUDNN的路径： https://user-images.githubusercontent.com/4096485/53249764-019ef880-36ca-11e9-8ffe-d9cf47e7e462.jpg
     
     * copy file `cudnn64_7.dll` to the folder `\build\darknet\x64` near with `darknet.exe`
+    * 拷贝文件 `cudnn64_7.dll` 到目录 `\build\darknet\x64`在`darknet.exe`旁边
     
     1.4. If you want to build **without CUDNN** then: open `\darknet.sln` -> (right click on project) -> properties  -> C/C++ -> Preprocessor -> Preprocessor Definitions, and remove this: `CUDNN;`
+    1.4. 如果你要构建项目且 **不使用CUDNN库**， 那么: 打开 `\darknet.sln` -> (右键单击项目) -> 属性 -> C/C++ -> 预处理器 -> 预处理器定义, 并移除： `CUDNN;`
 
 2. If you have other version of **CUDA (not 10.0)** then open `build\darknet\darknet.vcxproj` by using Notepad, find 2 places with "CUDA 10.0" and change it to your CUDA-version. Then open `\darknet.sln` -> (right click on project) -> properties  -> CUDA C/C++ -> Device and remove there `;compute_75,sm_75`. Then do step 1
+2. 如果你使用其他版本的 **CUDA (非 10.0)** 那么使用记事本或其他文本编辑工具打开 `build\darknet\darknet.vcxproj` , 找到 "CUDA 10.0"出现 的两个地方并将其变成你自己的CUDA版本. 然后打开 `\darknet.sln` -> (右键单击项目) -> 属性 -> CUDA C/C++ -> Device 移除 `;compute_75,sm_75`. 然后重复第一步
 
-3. If you **don't have GPU**, but have **MSVS 2015 and OpenCV 3.0** (with paths: `C:\opencv_3.0\opencv\build\include` & `C:\opencv_3.0\opencv\build\x64\vc14\lib`), then start MSVS, open `build\darknet\darknet_no_gpu.sln`, set **x64** and **Release**, and do the: Build -> Build darknet_no_gpu
+3. 如果你**没有GPU**,但是有 **MSVS 2015 和 OpenCV 3.0** (安装于路径: `C:\opencv_3.0\opencv\build\include` & `C:\opencv_3.0\opencv\build\x64\vc14\lib`), 那么启动MSVS, 打开 `build\darknet\darknet_no_gpu.sln`, 设置 **x64** 和 **Release**, 然后进行构建: Build -> Build darknet_no_gpu
 
-4. If you have **OpenCV 2.4.13** instead of 3.0 then you should change pathes after `\darknet.sln` is opened
+4. 如果你有 **OpenCV 2.4.13** 而非3.0 ，那么你应该修改库的路径，打开 `\darknet.sln` 后，进行如下两步操作
 
     4.1 (right click on project) -> properties  -> C/C++ -> General -> Additional Include Directories:  `C:\opencv_2.4.13\opencv\build\include`
   
@@ -302,18 +318,24 @@ PS Code\vcpkg>         .\vcpkg install pthreads opencv #replace with opencv[cuda
     
 5. If you have GPU with Tensor Cores (nVidia Titan V / Tesla V100 / DGX-2 and later) speedup Detection 3x, Training 2x:
     `\darknet.sln` -> (right click on project) -> properties -> C/C++ -> Preprocessor -> Preprocessor Definitions, and add here: `CUDNN_HALF;`
+5. 如果你拥有带Tensor核心的GPU (nVidia Titan V / Tesla V100 / DGX-2 and later) 检测速度会提升三倍，训练提升两倍:
+    `\darknet.sln` -> (right click on project) -> properties -> C/C++ -> Preprocessor -> Preprocessor Definitions, 并添加: `CUDNN_HALF;`
     
     **Note:** CUDA must be installed only after that MSVS2015 had been installed.
+    **注意：** CUDA必须在安装MSVS2015后安装
 
 ### How to compile (custom):
+### 如何编译(自定义):
 
 Also, you can to create your own `darknet.sln` & `darknet.vcxproj`, this example for CUDA 9.1 and OpenCV 3.0
+当然，你也可以创建你自己的`darknet.sln`和`darknet.vcxproj`,以CUDA9.1和OpenCV3.0为例
 
 Then add to your created project:
+加入你自己创建的工程中
 - (right click on project) -> properties  -> C/C++ -> General -> Additional Include Directories, put here: 
 
 `C:\opencv_3.0\opencv\build\include;..\..\3rdparty\include;%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(CUDNN)\include`
-- (right click on project) -> Build dependecies -> Build Customizations -> set check on CUDA 9.1 or what version you have - for example as here: http://devblogs.nvidia.com/parallelforall/wp-content/uploads/2015/01/VS2013-R-5.jpg
+- (右键单击项目) -> Build dependecies -> Build Customizations -> set check on CUDA 9.1 or what version you have - for example as here: http://devblogs.nvidia.com/parallelforall/wp-content/uploads/2015/01/VS2013-R-5.jpg
 - add to project:
     * all `.c` files
     * all `.cu` files 
@@ -340,29 +362,39 @@ Then add to your created project:
     * For OpenCV 2.4.13: `opencv_core2413.dll`, `opencv_highgui2413.dll` and `opencv_ffmpeg2413_64.dll` from  `C:\opencv_2.4.13\opencv\build\x64\vc14\bin`
 
 ## How to train (Pascal VOC Data):
+## 如何进行训练（Pascal VOC 数据集):
 
 1. Download pre-trained weights for the convolutional layers (154 MB): http://pjreddie.com/media/files/darknet53.conv.74 and put to the directory `build\darknet\x64`
+1. 下载卷积层的预训练权重 (154 MB): http://pjreddie.com/media/files/darknet53.conv.74 放到目录`build\darknet\x64`下
 
 2. Download The Pascal VOC Data and unpack it to directory `build\darknet\x64\data\voc` will be created dir `build\darknet\x64\data\voc\VOCdevkit\`:
+2. 下载Pascal VOC数据集并解压到目录 `build\darknet\x64\data\voc` 将被创建目录 `build\darknet\x64\data\voc\VOCdevkit\`:
     * http://pjreddie.com/media/files/VOCtrainval_11-May-2012.tar
     * http://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar
     * http://pjreddie.com/media/files/VOCtest_06-Nov-2007.tar
     
     2.1 Download file `voc_label.py` to dir `build\darknet\x64\data\voc`: http://pjreddie.com/media/files/voc_label.py
+    2.1 下载文件`voc_label.py`到目录 `build\darknet\x64\data\voc`: http://pjreddie.com/media/files/voc_label.py
 
 3. Download and install Python for Windows: https://www.python.org/ftp/python/3.5.2/python-3.5.2-amd64.exe
+3. 下载并安装Windows下的python: https://www.python.org/ftp/python/3.5.2/python-3.5.2-amd64.exe
 
 4. Run command: `python build\darknet\x64\data\voc\voc_label.py` (to generate files: 2007_test.txt, 2007_train.txt, 2007_val.txt, 2012_train.txt, 2012_val.txt)
+4. 运行命令: `python build\darknet\x64\data\voc\voc_label.py` (产生文件: 2007_test.txt, 2007_train.txt, 2007_val.txt, 2012_train.txt, 2012_val.txt)
 
 5. Run command: `type 2007_train.txt 2007_val.txt 2012_*.txt > train.txt`
+5. 运行命令: `type 2007_train.txt 2007_val.txt 2012_*.txt > train.txt`
 
 6. Set `batch=64` and `subdivisions=8` in the file `yolov3-voc.cfg`: [link](https://github.com/AlexeyAB/darknet/blob/ee38c6e1513fb089b35be4ffa692afd9b3f65747/cfg/yolov3-voc.cfg#L3-L4)
+6. 设置 `batch=64` 和 `subdivisions=8` 在配置文件 `yolov3-voc.cfg` 中: [link](https://github.com/AlexeyAB/darknet/blob/ee38c6e1513fb089b35be4ffa692afd9b3f65747/cfg/yolov3-voc.cfg#L3-L4)
 
 7. Start training by using `train_voc.cmd` or by using the command line: 
+7. 使用`train_voc.cmd`或者使用如下命令行开始训练: 
 
     `darknet.exe detector train cfg/voc.data cfg/yolov3-voc.cfg darknet53.conv.74` 
 
 (**Note:** To disable Loss-Window use flag `-dont_show`. If you are using CPU, try `darknet_no_gpu.exe` instead of `darknet.exe`.)
+(**注意:** 关闭损失显示窗口使用参数 `-dont_show`. 如果你使用CPU，那么使用 `darknet_no_gpu.exe` 而非 `darknet.exe`.)
 
 If required change pathes in the file `build\darknet\cfg\voc.data`
 
@@ -381,24 +413,27 @@ Only for small datasets sometimes better to decrease learning rate, for 4 GPUs s
 https://groups.google.com/d/msg/darknet/NbJqonJBTSY/Te5PfIpuCAAJ
 
 ## How to train (to detect your custom objects):
-(to train old Yolo v2 `yolov2-voc.cfg`, `yolov2-tiny-voc.cfg`, `yolo-voc.cfg`, `yolo-voc.2.0.cfg`, ... [click by the link](https://github.com/AlexeyAB/darknet/tree/47c7af1cea5bbdedf1184963355e6418cb8b1b4f#how-to-train-pascal-voc-data))
+## 如何训练(以检测你自己的物体)
+(训练旧的 Yolo v2 `yolov2-voc.cfg`, `yolov2-tiny-voc.cfg`, `yolo-voc.cfg`, `yolo-voc.2.0.cfg`, ... [点击这个链接](https://github.com/AlexeyAB/darknet/tree/47c7af1cea5bbdedf1184963355e6418cb8b1b4f#how-to-train-pascal-voc-data))
 
 Training Yolo v3:
+训练YOLOv3：
 
 1. Create file `yolo-obj.cfg` with the same content as in `yolov3.cfg` (or copy `yolov3.cfg` to `yolo-obj.cfg)` and:
+1. 直接拷贝文件 `yolov3.cfg` 然后改名为yolo-obj.cfg，然后：
 
-  * change line batch to [`batch=64`](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L3)
-  * change line subdivisions to [`subdivisions=8`](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L4)
-  * change line `classes=80` to your number of objects in each of 3 `[yolo]`-layers:
+  * 修改batch那一行为 [`batch=64`](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L3)
+  * 修改subdivision那一行为[`subdivisions=8`](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L4)
+  * 修改classes那一行 `classes=80` 为你自己检测的目标种类数目在每个`[yolo]`层中(一共三个yolo层)::
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L610
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L696
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L783
-  * change [`filters=255`] to filters=(classes + 5)x3 in the 3 `[convolutional]` before each `[yolo]` layer
+  * 修改 [`filters=255`] 为 filters=(classes + 5)x3 [yolo]层之前的在3个 `[convolutional]`中
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L603
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L689
       * https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L776
 
-  So if `classes=1` then should be `filters=18`. If `classes=2` then write `filters=21`.
+  所以如果 `classes=1`那么`filters=18`.如果`classes=2` 那么`filters=21`.
   
   **(Do not write in the cfg-file: filters=(classes + 5)x3)**
   
@@ -415,8 +450,10 @@ Training Yolo v3:
   ```
 
 2. Create file `obj.names` in the directory `build\darknet\x64\data\`, with objects names - each in new line
+2. 创建文件`obj.names`在目录`build\darknet\x64\data\`中，每行一个目标种类名
 
 3. Create file `obj.data` in the directory `build\darknet\x64\data\`, containing (where **classes = number of objects**):
+3. 创建文件`obj.data` 在目录 `build\darknet\x64\data\`中，包含如下内容
 
   ```
   classes= 2
@@ -427,16 +464,19 @@ Training Yolo v3:
   ```
 
 4. Put image-files (.jpg) of your objects in the directory `build\darknet\x64\data\obj\`
+4. 将你的检测目标的图片文件(.jpg)放到目录`build\darknet\x64\data\obj\`
 
 5. You should label each object on images from your dataset. Use this visual GUI-software for marking bounded boxes of objects and generating annotation files for Yolo v2 & v3: https://github.com/AlexeyAB/Yolo_mark
+5. 你应该标注你数据集的图片中的每个目标. 使用这个可视化的图形界面软件来标注图片中的每个目标并且产生用于yolo v2和v3的解释文件: https://github.com/AlexeyAB/Yolo_mark
 
 It will create `.txt`-file for each `.jpg`-image-file - in the same directory and with the same name, but with `.txt`-extension, and put to file: object number and object coordinates on this image, for each object in new line: 
+它会为每个`.jpg`图片文件创建一个 `.txt`文件 - 在相同目录且名字相同仅后缀名不同, 且在相应`.txt` 写入目标数量和在图片中的坐标，一个目标一行: 
 
 `<object-class> <x_center> <y_center> <width> <height>`
 
   Where: 
-  * `<object-class>` - integer object number from `0` to `(classes-1)`
-  * `<x_center> <y_center> <width> <height>` - float values **relative** to width and height of image, it can be equal from `(0.0 to 1.0]`
+  * `<object-class>` - 整型目标类别编号 `0` 到 `(classes-1)`
+  * `<x_center> <y_center> <width> <height>` - 浮点型 **相对** 于图片的宽和高, 取值从 `(0.0 到 1.0]`
   * for example: `<x> = <absolute_x> / <image_width>` or `<height> = <absolute_height> / <image_height>`
   * atention: `<x_center> <y_center>` - are center of rectangle (are not top-left corner)
 
@@ -449,6 +489,7 @@ It will create `.txt`-file for each `.jpg`-image-file - in the same directory an
   ```
 
 6. Create file `train.txt` in directory `build\darknet\x64\data\`, with filenames of your images, each filename in new line, with path relative to `darknet.exe`, for example containing:
+6. 创建文件`train.txt` 在目录`build\darknet\x64\data\`中，内容是你的图片的文件名，一行一个文件名，相对于darknet.txt
 
   ```
   data/obj/img1.jpg
@@ -457,33 +498,48 @@ It will create `.txt`-file for each `.jpg`-image-file - in the same directory an
   ```
 
 7. Download pre-trained weights for the convolutional layers (154 MB): https://pjreddie.com/media/files/darknet53.conv.74 and put to the directory `build\darknet\x64`
+7. 下载卷积层的预训练权重(154MB):https://pjreddie.com/media/files/darknet53.conv.74 ，并且放到目录`build\darknet\x64`之中
 
 8. Start training by using the command line: `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74`
+8. 使用命令行: `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74`开始进行训练
      
    To train on Linux use command: `./darknet detector train data/obj.data yolo-obj.cfg darknet53.conv.74` (just use `./darknet` instead of `darknet.exe`)
+   在Linux上训练使用命令： `./darknet detector train data/obj.data yolo-obj.cfg darknet53.conv.74` (just use `./darknet` instead of `darknet.exe`)
      
    * (file `yolo-obj_last.weights` will be saved to the `build\darknet\x64\backup\` for each 100 iterations)
+   * (文件 `yolo-obj_last.weights`每经过100次迭代会被保存到`build\darknet\x64\backup\`）
    * (file `yolo-obj_xxxx.weights` will be saved to the `build\darknet\x64\backup\` for each 1000 iterations)
+   * (文件 `yolo-obj_xxxx.weights` 会被保存到 `build\darknet\x64\backup\` 每经过1000次迭代)
    * (to disable Loss-Window use `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -dont_show`, if you train on computer without monitor like a cloud Amazon EC2)
+   * (关闭Loss-Window 使用`darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -dont_show`, 如果你在没有显示器的主机如亚马逊云EC2上训练时)
    * (to see the mAP & Loss-chart during training on remote server without GUI, use command `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -dont_show -mjpeg_port 8090 -map` then open URL `http://ip-address:8090` in Chrome/Firefox browser)
+   * (为了在没有GUI界面的远端服务器上查看训练时的mAP 及 Loss-chart , 使用命令`darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -dont_show -mjpeg_port 8090 -map` 然后打开路径 `http://ip-address:8090` 用谷歌或者火狐浏览器)
 
 8.1. For training with mAP (mean average precisions) calculation for each 4 Epochs (set `valid=valid.txt` or `train.txt` in `obj.data` file) and run: `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -map`
+8.1. 为了训练时每4个Epoch计算一次mAP (设置 `valid=valid.txt` or `train.txt` in `obj.data` file) and 运行: `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -map`
 
 9. After training is complete - get result `yolo-obj_final.weights` from path `build\darknet\x64\backup\`
+9. 训练完成后，从路径 `build\darknet\x64\backup\` 得到结果 `yolo-obj_final.weights`
 
  * After each 100 iterations you can stop and later start training from this point. For example, after 2000 iterations you can stop training, and later just copy `yolo-obj_2000.weights` from `build\darknet\x64\backup\` to `build\darknet\x64\` and start training using: `darknet.exe detector train data/obj.data yolo-obj.cfg yolo-obj_2000.weights`
+ * 每100次迭代后你可以停止并且下次从这里开始训练，2000次迭代后你可以停止训练然后从`build\darknet\x64\backup\` 拷贝 `yolo-obj_2000.weights` 到 `build\darknet\x64\` 然后开始训练: `darknet.exe detector train data/obj.data yolo-obj.cfg yolo-obj_2000.weights`
+ 
 
     (in the original repository https://github.com/pjreddie/darknet the weights-file is saved only once every 10 000 iterations `if(iterations > 1000)`)
 
  * Also you can get result earlier than all 45000 iterations.
  
  **Note:** If during training you see `nan` values for `avg` (loss) field - then training goes wrong, but if `nan` is in some other lines - then training goes well.
+ **注意** 如果训练中你看到 `avg` 为 `nan`, 那么训练出现了错误，但如果 `nan` 是在其他行，那么训练未出错。
  
  **Note:** If you changed width= or height= in your cfg-file, then new width and height must be divisible by 32.
+ **注意：** 如果你在cfg文件中修改了width= 或者 height= ，那么新的width和height值必须能够被32整除
  
  **Note:** After training use such command for detection: `darknet.exe detector test data/obj.data yolo-obj.cfg yolo-obj_8000.weights`
+ **注意** 在训练之后，使用如下命令进行检测： `darknet.exe detector test data/obj.data yolo-obj.cfg yolo-obj_8000.weights`
  
   **Note:** if error `Out of memory` occurs then in `.cfg`-file you should increase `subdivisions=16`, 32 or 64: [link](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L4)
+  **注意：** 如果出现 `Out of memory` 的错误， 在 `.cfg`文件中你应该增加 `subdivisions=16`, 32 or 64: [link](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L4)
  
 ### How to train tiny-yolo (to detect your custom objects):
 
