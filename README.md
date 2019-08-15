@@ -227,21 +227,30 @@ On Linux find executable file `./darknet` in the root directory, while on Window
 * Yolo v3 COCO-model: `darknet.exe detector demo data/coco.data yolov3.cfg yolov3.weights http://192.168.0.80:8080/video?dummy=param.mjpg -i 0`
 
 ### How to compile on Linux
+### 如何在Linux上编译
 
 Just do `make` in the darknet directory.
+在darknet目录下运行make命令就可以了
 Before make, you can set such options in the `Makefile`: [link](https://github.com/AlexeyAB/darknet/blob/9c1b9a2cf6363546c152251be578a21f3c3caec6/Makefile#L1)
-
+在make之前，你可以在`Makefile`中设置选项:[link](https://github.com/AlexeyAB/darknet/blob/9c1b9a2cf6363546c152251be578a21f3c3caec6/Makefile#L1)
 * `GPU=1` to build with CUDA to accelerate by using GPU (CUDA should be in `/usr/local/cuda`)
+* `GPU=1`表示同CUDA一起构建使用GPU加速(CUDA应该在`/usr/local/cuda`目录中)
 * `CUDNN=1` to build with cuDNN v5-v7 to accelerate training by using GPU (cuDNN should be in `/usr/local/cudnn`)
+* `CUDNN=1`表示同cuDNN v5-v7一起构建使用GPU加速
 * `CUDNN_HALF=1` to build for Tensor Cores (on Titan V / Tesla V100 / DGX-2 and later) speedup Detection 3x, Training 2x
+* `CUDNN_HALF=1`可以使用TensorCores(在Titan V/Tesla V100/DGX-2或更新的显卡上)加速，提升检测速度3倍，训练速度2倍
 * `OPENCV=1` to build with OpenCV 3.x/2.4.x - allows to detect on video files and video streams from network cameras or web-cams
+* `OPENCV=1`表示可以同OpenCV3.x/2.4.x一起构建，允许检测网络摄像头的视频文件和视频流
 * `DEBUG=1` to bould debug version of Yolo
+* `DEBUG=1`构建YOLO的debug版本
 * `OPENMP=1` to build with OpenMP support to accelerate Yolo by using multi-core CPU
+* `OPENMP=1`提供OpenMP支持用以使用多CPU加速
 * `LIBSO=1` to build a library `darknet.so` and binary runable file `uselib` that uses this library. Or you can try to run so `LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./uselib test.mp4` How to use this SO-library from your own code - you can look at C++ example: https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
+* `LIBSO=1`构建库`darknet.so`和二进制可运行文件`uselib`来使用该库，或者你可以试一试运行so`LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./uselib test.mp4`,怎样在你自己的代码中使用这个动态链接库，可以查看C++例子https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
     or use in such a way: `LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./uselib data/coco.names cfg/yolov3.cfg yolov3.weights test.mp4`
-
+    或者这样使用`LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./uselib data/coco.names cfg/yolov3.cfg yolov3.weights test.mp4`
 To run Darknet on Linux use examples from this article, just use `./darknet` instead of `darknet.exe`, i.e. use this command: `./darknet detector test ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights`
-
+在Linux上运行Darknet，可以使用本文中的示例，仅需将`darknet.exe`换成`./darknet`，如:`./darknet detector test ./cfg/coco.data ./cfg/yolov3.cfg ./yolov3.weights`
 ### How to compile on Windows (using `vcpkg`)
 ### Windows上如何进行编译(使用 `vcpkg`)
 
@@ -335,7 +344,10 @@ Then add to your created project:
 - (right click on project) -> properties  -> C/C++ -> General -> Additional Include Directories, put here: 
 
 `C:\opencv_3.0\opencv\build\include;..\..\3rdparty\include;%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(CUDNN)\include`
-- (右键单击项目) -> Build dependecies -> Build Customizations -> set check on CUDA 9.1 or what version you have - for example as here: http://devblogs.nvidia.com/parallelforall/wp-content/uploads/2015/01/VS2013-R-5.jpg
+- (右键单击项目)->属性-> C/C++ -> 常规 -> 附加包含目录,加入如下的内容
+`C:\opencv_3.0\opencv\build\include;..\..\3rdparty\include;%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir);$(CUDNN)\include`
+- (right click on project) -> Build dependecies -> Build Customizations -> set check on CUDA 9.1 or what version you have - for example as here: http://devblogs.nvidia.com/parallelforall/wp-content/uploads/2015/01/VS2013-R-5.jpg
+- (右键单击项目)->
 - add to project:
     * all `.c` files
     * all `.cu` files 
@@ -479,6 +491,7 @@ It will create `.txt`-file for each `.jpg`-image-file - in the same directory an
   * `<x_center> <y_center> <width> <height>` - 浮点型 **相对** 于图片的宽和高, 取值从 `(0.0 到 1.0]`
   * for example: `<x> = <absolute_x> / <image_width>` or `<height> = <absolute_height> / <image_height>`
   * atention: `<x_center> <y_center>` - are center of rectangle (are not top-left corner)
+  * 注意: `<x_center> <y_center>` 是矩框的中心，而不是左上角
 
   For example for `img1.jpg` you will be created `img1.txt` containing:
 
@@ -542,21 +555,32 @@ It will create `.txt`-file for each `.jpg`-image-file - in the same directory an
   **注意：** 如果出现 `Out of memory` 的错误， 在 `.cfg`文件中你应该增加 `subdivisions=16`, 32 or 64: [link](https://github.com/AlexeyAB/darknet/blob/0039fd26786ab5f71d5af725fc18b3f521e7acfd/cfg/yolov3.cfg#L4)
  
 ### How to train tiny-yolo (to detect your custom objects):
+### 如何训练tiny-yolo(检测自定义的目标)
 
 Do all the same steps as for the full yolo model as described above. With the exception of:
+所有的步骤和前述的一样，除了:
 * Download default weights file for yolov3-tiny: https://pjreddie.com/media/files/yolov3-tiny.weights
+* 下载yolov3-tiny默认的权重文件https://pjreddie.com/media/files/yolov3-tiny.weights
 * Get pre-trained weights `yolov3-tiny.conv.15` using command: `darknet.exe partial cfg/yolov3-tiny.cfg yolov3-tiny.weights yolov3-tiny.conv.15 15`
+* 获取与训练的权重`yolov3-tiny.conv.15`,使用命令`darknet.exe partial cfg/yolov3-tiny.cfg yolov3-tiny.weights yolov3-tiny.conv.15 15`
 * Make your custom model `yolov3-tiny-obj.cfg` based on `cfg/yolov3-tiny_obj.cfg` instead of `yolov3.cfg`
+* 在`cfg/yolov3-tiny_obj.cfg`而不是`yolov3.cfg`的基础上创建你自己的模型`yolov3-tiny-obj.cfg`
 * Start training: `darknet.exe detector train data/obj.data yolov3-tiny-obj.cfg yolov3-tiny.conv.15`
+* 开始训练:`darknet.exe detector train data/obj.data yolov3-tiny-obj.cfg yolov3-tiny.conv.15`
 
 For training Yolo based on other models ([DenseNet201-Yolo](https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/densenet201_yolo.cfg) or [ResNet50-Yolo](https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/resnet50_yolo.cfg)), you can download and get pre-trained weights as showed in this file: https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/partial.cmd
+基于其他模型训练YOLO([DenseNet201-Yolo](https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/densenet201_yolo.cfg) or [ResNet50-Yolo](https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/resnet50_yolo.cfg))，你可以下载预训练权重，像这个文件中展示的一样https://github.com/AlexeyAB/darknet/blob/master/build/darknet/x64/partial.cmd
 If you made you custom model that isn't based on other models, then you can train it without pre-trained weights, then will be used random initial weights.
+如果你使用自己的模型而非基于其他模型，你可以无需预训练权重，模型会随机初始化权重
  
 ## When should I stop training:
+## 我什么时候应该停止训练
 
 Usually sufficient 2000 iterations for each class(object), but not less than 4000 iterations in total. But for a more precise definition when you should stop training, use the following manual:
+通常每一类目标2000次迭代就够了，但是总的迭代次数不能少于4000次。但若需要更精确具体一点的规则，就使用下面的手册:
 
 1. During training, you will see varying indicators of error, and you should stop when no longer decreases **0.XXXXXXX avg**:
+1. 在训练过程中，你将会看到错误指数的变化，且你应该在**0.XXXXXXX avg**不再下降的时候停止训练
 
   > Region Avg IOU: 0.798363, Class: 0.893232, Obj: 0.700808, No Obj: 0.004567, Avg Recall: 1.000000,  count: 8
   > Region Avg IOU: 0.800677, Class: 0.892181, Obj: 0.701590, No Obj: 0.004574, Avg Recall: 1.000000,  count: 8
@@ -568,36 +592,48 @@ Usually sufficient 2000 iterations for each class(object), but not less than 400
   * **0.060730 avg** - average loss (error) - **the lower, the better**
 
   When you see that average loss **0.xxxxxx avg** no longer decreases at many iterations then you should stop training. The final avgerage loss can be from `0.05` (for a small model and easy dataset) to `3.0` (for a big model and a difficult dataset).
+  当你看到平均损失**0.xxxxxx avg**在多次迭代后不再下降，你应该停止训练，最终的平均损失应该在0.05（小的模型，简单数据集)到3.0(大的模型和复杂数据集)之间.
 
 2. Once training is stopped, you should take some of last `.weights`-files from `darknet\build\darknet\x64\backup` and choose the best of them:
+2. 一旦训练停止，你应该从`darknet\build\darknet\x64\backup`选一些最新的`.weight`权重文件，并从中选择效果最好的。
 
 For example, you stopped training after 9000 iterations, but the best result can give one of previous weights (7000, 8000, 9000). It can happen due to overfitting. **Overfitting** - is case when you can detect objects on images from training-dataset, but can't detect objects on any others images. You should get weights from **Early Stopping Point**:
+例如，你在9000次迭代后停止了训练，但最好结果是前面迭代的权重(7000, 8000, 9000), 这在过拟合时会发生(过拟合，一种能在训练数据集中进行良好检测，而不能在其他任何图像中检测到目标的情况). 此时应该从前面的**Early Stopping Point**选择检测权重。
 
 ![Overfitting](https://hsto.org/files/5dc/7ae/7fa/5dc7ae7fad9d4e3eb3a484c58bfc1ff5.png) 
 
 To get weights from Early Stopping Point:
+为了在适止点得到权重
 
   2.1. At first, in your file `obj.data` you must specify the path to the validation dataset `valid = valid.txt` (format of `valid.txt` as in `train.txt`), and if you haven't validation images, just copy `data\train.txt` to `data\valid.txt`.
+  2.1 首先，在你的`obj.data`文件中，你必须指定验证集的文件路径`valid = valid.txt`(格式与`train.txt`一样),如果你没有验证集，那么就拷贝`data\train.txt`到`data\valid.txt`.
 
   2.2 If training is stopped after 9000 iterations, to validate some of previous weights use this commands:
+  2.2 如果训练在9000次迭代后停止，使用这个命令来验证一些之前的权重
 
 (If you use another GitHub repository, then use `darknet.exe detector recall`... instead of `darknet.exe detector map`...)
+(如果你使用另一个GitHub仓库，使用`darknet.exe detector recall`...而非`darknet.exe detector map`...)
 
 * `darknet.exe detector map data/obj.data yolo-obj.cfg backup\yolo-obj_7000.weights`
 * `darknet.exe detector map data/obj.data yolo-obj.cfg backup\yolo-obj_8000.weights`
 * `darknet.exe detector map data/obj.data yolo-obj.cfg backup\yolo-obj_9000.weights`
 
 And comapre last output lines for each weights (7000, 8000, 9000):
+比较各个权重的输出的最后一行
 
 Choose weights-file **with the highest mAP (mean average precision)** or IoU (intersect over union)
+选择具有最高的**mAP(mean average precision)** 或者IoU的权重文件
 
 For example, **bigger mAP** gives weights `yolo-obj_8000.weights` - then **use this weights for detection**.
+例如，`yolo-obj_8000.weights`有了**更大的mAP**值,那么就使用这个权重进行检测
 
 Or just train with `-map` flag: 
+或者训练时添加`-map`参数
 
 `darknet.exe detector train data/obj.data yolo-obj.cfg darknet53.conv.74 -map` 
 
 So you will see mAP-chart (red-line) in the Loss-chart Window. mAP will be calculated for each 4 Epochs using `valid=valid.txt` file that is specified in `obj.data` file (`1 Epoch = images_in_train_txt / batch` iterations)
+然后你将在Loss-chart窗口中看到mAP-chart(红色的线). mAP使用在`obj.data`中指定的`valid=valid.txt`文件，每4个Epochs计算一次(1 Epoch= images_in_train_txt/batch 次迭代)
 
 ![loss_chart_map_chart](https://hsto.org/webt/yd/vl/ag/ydvlagutof2zcnjodstgroen8ac.jpeg)
 
