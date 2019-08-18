@@ -754,19 +754,28 @@ With example of: `train.txt`, `obj.names`, `obj.data`, `yolo-obj.cfg`, `air`1-6`
 
 
 ## How to use Yolo as DLL and SO libraries
+## 如何将YOLO作为动态链接库使用
 
 * on Linux - set `LIBSO=1` in the `Makefile` and do `make`
+* 在Linux上 - 在`Makefile`中设置`LIBSO=1`然后`make`
 * on Windows - compile `build\darknet\yolo_cpp_dll.sln` or `build\darknet\yolo_cpp_dll_no_gpu.sln` solution
+* 在Windows上 - 编译`build\darknet\yolo_cpp_dll.sln`或者`build\darknet\yolo_cpp_dll_no_gpu.sln`这两个解决方案
 
 There are 2 APIs:
+这里提供两个API:
 * C API: https://github.com/AlexeyAB/darknet/blob/master/include/darknet.h
     * Python examples using the C API::     
+         * https://github.com/AlexeyAB/darknet/blob/master/darknet.py	
+         * https://github.com/AlexeyAB/darknet/blob/master/darknet_video.py
+* C API: https://github.com/AlexeyAB/darknet/blob/master/include/darknet.h
+    * Python使用 C API示例::
          * https://github.com/AlexeyAB/darknet/blob/master/darknet.py	
          * https://github.com/AlexeyAB/darknet/blob/master/darknet_video.py
     
 * C++ API: https://github.com/AlexeyAB/darknet/blob/master/include/yolo_v2_class.hpp
     * C++ example that uses C++ API: https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
-    
+* C++ API: https://github.com/AlexeyAB/darknet/blob/master/include/yolo_v2_class.hpp
+    * C++ 使用示例: https://github.com/AlexeyAB/darknet/blob/master/src/yolo_console_dll.cpp
 ----
 
 1. To compile Yolo as C++ DLL-file `yolo_cpp_dll.dll` - open in MSVS2015 file `build\darknet\yolo_cpp_dll.sln`, set **x64** and **Release**, and do the: Build -> Build yolo_cpp_dll
